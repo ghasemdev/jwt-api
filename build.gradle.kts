@@ -1,11 +1,7 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-
 plugins {
-    kotlin("jvm") version "1.9.23"
+    alias(libs.plugins.kotlin.jvm)
     application
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 group = "com.parsuomash"
@@ -18,25 +14,36 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-call-id-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-double-receive-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-resources:$ktor_version")
-    implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-swagger-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-default-headers-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-netty:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation("io.ktor:ktor-server-config-yaml:3.0.0-beta-1")
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization)
+
+    // Exposed
+    implementation(libs.bundles.exposed)
+
+    // Database Tools
+    implementation(libs.postgresql)
+    implementation(libs.flyway)
+    implementation(libs.hikari)
+
+    // Redis
+    implementation(libs.lettuce.core)
+    implementation(libs.lettucemod)
+
+    // Koin
+    implementation(libs.koin.ktor)
+    testImplementation(libs.koin.test)
+
+    // Ktor
+    implementation(libs.bundles.ktor)
+    implementation(libs.logback)
+    testImplementation(libs.ktor.server.tests)
+
+    testImplementation(libs.kotlin.test.unit)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
 }
