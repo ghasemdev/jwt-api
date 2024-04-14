@@ -2,5 +2,6 @@ ktor:
   application:
     modules:
       - com.parsuomash.ApplicationKt.module
+  development: true
   deployment:
     port: 8080
