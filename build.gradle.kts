@@ -14,9 +14,15 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 dependencies {
     // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.kotlinx.coroutines.test)
 
     // Serialization
